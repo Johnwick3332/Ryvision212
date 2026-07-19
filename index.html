@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ryvision</title>
+    <meta
+      name="description"
+      content="Ryvision — a calm and minimal home page."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="Seal_of_the_Department_of_Education_of_the_Philippines.png" />
+
+    <link rel="stylesheet" crossorigin href="/assets/index-BL4E7Sx5.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand-mark" href="#home" aria-label="Ryvision home">
+        <span>RYVISION</span>
+      </a>
+      <nav class="nav-links" aria-label="Section navigation">
+        <a class="category active" href="#home">Home</a>
+        <a class="category" href="#about">About</a>
+        <a class="category" href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="home-card">
+          <p class="eyebrow">Ryvision</p>
+          <h1>RYVISION</h1>
+          <p class="intro">
+            A simple and thoughtful place for the PNS community.
+          </p>
+          <a
+            class="button"
+            href="https://www.roblox.com/communities/35693828/The-Cult-Of-Noctalithic#!/about"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Join our Roblox Group
+          </a>
+        </div>
+      </section>
+
+      <section class="content-section about-section" id="about">
+        <div class="about-card">
+          <p class="section-kicker">About</p>
+          <h2>About us</h2>
+          <p>
+            Ryvision is a Ryfilm's Company, This website is currently under working.
+          </p>
+        </div>
+      </section>
+
+      <section class="content-section contact-section" id="contact">
+        <div class="contact-card">
+          <h2>Get in touch</h2>
+          <form class="contact-form" id="contactForm">
+            <label>
+              <span>Name</span>
+              <input type="text" name="name" placeholder="Your name" required />
+            </label>
+            <label>
+              <span>Email</span>
+              <input type="email" name="email" placeholder="Your email" required />
+            </label>
+            <label>
+              <span>Message</span>
+              <textarea name="message" rows="5" placeholder="Write your message" required></textarea>
+            </label>
+            <button type="submit">Send</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const links = document.querySelectorAll('.category');
+      const sections = document.querySelectorAll('main section[id]');
+
+      const setActiveLink = (id) => {
+        links.forEach((link) => {
+          link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+        });
+      };
+
+      links.forEach((link) => {
+        link.addEventListener('click', (event) => {
+          event.preventDefault();
+          const targetId = link.getAttribute('href').replace('#', '');
+          const targetSection = document.getElementById(targetId);
+
+          if (targetSection) {
+            targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+
+          setActiveLink(targetId);
+        });
+      });
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActiveLink(entry.target.id);
+            }
+          });
+        },
+        { rootMargin: '-35% 0px -45% 0px', threshold: 0.2 }
+      );
+
+      sections.forEach((section) => observer.observe(section));
+
+      const contactForm = document.getElementById('contactForm');
+      if (contactForm) {
+        contactForm.addEventListener('submit', (event) => {
+          event.preventDefault();
+          const formData = new FormData(contactForm);
+          const name = formData.get('name') || 'Anonymous';
+          const email = formData.get('email') || 'No email provided';
+          const message = formData.get('message') || 'No message';
+          const subject = encodeURIComponent('New message from PNS website');
+          const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+          const mailtoLink = `mailto:aserblazeusar@gmail.com?subject=${subject}&body=${body}`;
+          window.location.href = mailtoLink;
+        });
+      }
+    </script>
+  </body>
+</html>
